@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shark City Hoops – Warriors Night Ticket Form</title>
+  <style>
+    :root {
+      --teal: #00b4c8;
+      --teal-dark: #008fa0;
+      --teal-light: #00d4ea;
+      --bg: #111418;
+      --card: #1a1f26;
+      --card2: #222830;
+      --border: #2e3540;
+      --text: #e8edf2;
+      --muted: #7a8a9a;
+      --white: #ffffff;
+      --accent: #f0a500;
+      --gsw-gold: #ffc72c;
+      --gsw-blue: #1d428a;
+      --success: #2ecc71;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 24px; }
+    .logo-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0d2a30 0%, #0a3a42 100%);
+      border: 2px solid var(--teal);
+      border-radius: 16px;
+      padding: 20px 32px;
+      margin-bottom: 16px;
+    }
+    .logo-badge h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+    }
+    .logo-badge h1 span { color: var(--teal); }
+    .logo-badge .sub {
+      font-size: 0.85rem;
+      color: var(--teal-light);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .header h2 { font-size: 1.1rem; font-weight: 500; color: var(--muted); margin-top: 8px; }
+    .season-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #111;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-top: 10px;
+    }
+
+    /* ── Event hero ── */
+    .event-hero {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #10203f 0%, var(--gsw-blue) 100%);
+      border: 2px solid var(--gsw-gold);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    .event-hero .matchup {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .event-hero .matchup .gsw { color: var(--gsw-gold); }
+    .event-hero .vs { color: rgba(255,255,255,0.5); font-size: 1rem; padding: 0 6px; }
+    .event-hero .when {
+      font-size: 1rem;
+      color: var(--gsw-gold);
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .event-hero .where { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    .event-hero .price-pill {
+      display: inline-block;
+      margin-top: 14px;
+      background: var(--gsw-gold);
+      color: #10203f;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      border-radius: 24px;
+      padding: 8px 22px;
+    }
+
+    /* ── Perk banner ── */
+    .perk-banner {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #0d2a30, #0a3a42);
+      border: 1px solid var(--teal);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .perk-banner .title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 6px;
+    }
+    .perk-banner .body { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    .perk-banner .body strong { color: var(--teal-light); }
+
+    /* ── Deadline banner ── */
+    .deadline-banner {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #1a1208, #2d1f0a);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+    }
+    .deadline-banner .label {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+    }
+    .deadline-banner .date { font-size: 0.95rem; color: var(--text); font-weight: 700; }
+    .deadline-banner .note { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── Progress toward 75 ── */
+    .progress-card {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: none;
+    }
+    .progress-card.visible { display: block; }
+    .progress-card .label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 8px;
+    }
+    .progress-card .label .count { color: var(--white); font-size: 0.9rem; letter-spacing: 0.5px; }
+    .progress-track {
+      height: 12px; background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--teal-dark), var(--teal-light));
+      border-radius: 8px;
+      transition: width 0.6s ease;
+    }
+    .progress-card .hint { font-size: 0.72rem; color: var(--muted); margin-top: 6px; }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Form fields ── */
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 7px;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], select {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0, 180, 200, 0.15);
+    }
+    .field-hint { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } }
+
+    /* ── Ticket stepper ── */
+    .ticket-row {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      align-items: center;
+      gap: 12px;
+    }
+    @media (max-width: 480px) { .ticket-row { grid-template-columns: 1fr; } }
+    .ticket-info .ticket-name { font-size: 1rem; font-weight: 800; color: var(--white); }
+    .ticket-info .ticket-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+    .ticket-info .ticket-price { font-size: 1.2rem; color: var(--teal-light); font-weight: 900; margin-top: 4px; }
+    .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .stepper.active { border-color: var(--teal); background: #0d2a30; }
+    .step-btn {
+      background: none;
+      border: none;
+      color: var(--teal);
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 10px 16px;
+      cursor: pointer;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .step-btn:hover { background: rgba(0,180,200,0.12); }
+    .step-btn:active { background: rgba(0,180,200,0.25); }
+    .step-val {
+      flex: 1;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      min-width: 22px;
+      user-select: none;
+    }
+
+    /* ── Summary ── */
+    .summary-card {
+      background: linear-gradient(135deg, #0d2a30 0%, #0a3a42 100%);
+      border: 2px solid var(--teal);
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 680px;
+      margin: 0 auto 20px;
+    }
+    .summary-rows { margin-bottom: 16px; }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row .qty { color: var(--text); font-weight: 600; }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 2px solid var(--teal);
+      margin-top: 8px;
+    }
+    .total-label {
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--teal-light);
+    }
+    .total-amount { font-size: 2rem; font-weight: 900; color: var(--white); }
+
+    /* ── Notes ── */
+    textarea {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 11px 14px;
+      outline: none;
+      resize: vertical;
+      min-height: 90px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    /* ── Submit ── */
+    .submit-btn {
+      width: 100%;
+      max-width: 680px;
+      display: block;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Status ── */
+    #status-msg {
+      display: none;
+      max-width: 680px;
+      margin: 0 auto 16px;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    #status-msg.error { background: #3a0d0d; color: #ff8a8a; border: 1px solid #ff8a8a; display: block; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 2px solid var(--teal);
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-header {
+      padding: 24px 24px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-check { font-size: 2.5rem; margin-bottom: 8px; }
+    .modal-header h2 { font-size: 1.25rem; color: var(--white); margin-bottom: 4px; }
+    .modal-header p { font-size: 0.85rem; color: var(--muted); }
+    .modal-body { padding: 20px 24px; }
+    .modal-order-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .modal-order-line:last-child { border-bottom: none; }
+    .modal-order-line .line-price { color: var(--teal-light); font-weight: 600; }
+    .modal-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-top: 2px solid var(--teal);
+      margin-top: 8px;
+    }
+    .modal-total-label { font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-light); }
+    .modal-total-amount { font-size: 1.7rem; font-weight: 900; color: var(--white); }
+    .modal-payment-note {
+      background: var(--card2);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+    .modal-payment-note strong { color: var(--text); }
+    .modal-close-btn {
+      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      margin: 16px 24px 24px;
+      width: calc(100% - 48px);
+    }
+    .modal-close-btn:hover { opacity: 0.88; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-badge">
+      <h1>SHARK CITY <span>HOOPS</span></h1>
+      <div class="sub">Warriors Night Fundraiser</div>
+    </div>
+    <h2>Group Ticket Purchase Form</h2>
+    <div class="season-tag">🦈 SCH Night at Chase Center</div>
+  </div>
+
+  <!-- ── Event hero ── -->
+  <div class="event-hero">
+    <div class="matchup"><span class="gsw">Golden State Warriors</span><span class="vs">vs</span>Portland Trail Blazers</div>
+    <div class="when">Friday, October 16, 2026</div>
+    <div class="where">Chase Center · San Francisco</div>
+    <div class="price-pill">$60 per ticket</div>
+  </div>
+
+  <!-- ── Shootaround perk ── -->
+  <div class="perk-banner">
+    <div class="title">🏀 Exclusive Perk — Pre-Game Shootaround</div>
+    <div class="body">
+      <strong>Shark City Hoops players</strong> get to go down near <strong>courtside</strong> before the game
+      to watch the Warriors warm up and run their shootaround — up close. This perk is for
+      <strong>SCH players only</strong>, so make sure to list your player(s) below!
+    </div>
+  </div>
+
+  <!-- ── Deadline ── -->
+  <div class="deadline-banner">
+    <div class="label">⏰ Ticket Deadline</div>
+    <div class="date">Order + pay by <span style="color: var(--accent);">Tuesday, September 1, 2026</span></div>
+    <div class="note">We're placing one group order for everyone — 75-ticket minimum, so bring your friends & family!</div>
+  </div>
+
+  <!-- ── Progress toward 75 (auto-hides if backend not reachable) ── -->
+  <div class="progress-card" id="progress-card">
+    <div class="label"><span>Group Ticket Count</span><span class="count" id="progress-count">— / 75</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="hint">Tickets claimed so far toward our 75-ticket group minimum.</div>
+  </div>
+
+  <div id="status-msg"></div>
+
+  <form id="ticket-form" novalidate>
+
+    <!-- ── Buyer Info ── -->
+    <div class="card">
+      <div class="card-title">👤 Your Info</div>
+      <div class="field">
+        <label for="buyer-name">Your Name *</label>
+        <input type="text" id="buyer-name" name="buyerName" placeholder="First Last" required />
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone *</label>
+          <input type="tel" id="phone" name="phone" placeholder="(408) 555-0100" required />
+        </div>
+      </div>
+      <div class="field" style="margin-bottom: 0;">
+        <label for="connection">Connection to Shark City Hoops *</label>
+        <select id="connection" name="connection" required>
+          <option value="">— Select one —</option>
+          <option>SCH Parent / Guardian</option>
+          <option>SCH Player Family Member</option>
+          <option>Friend / Community Supporter</option>
+          <option>SCH Coach / Staff</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ── Player Association ── -->
+    <div class="card">
+      <div class="card-title">🦈 SCH Player(s) in Your Group</div>
+      <div class="field" style="margin-bottom: 0;">
+        <label for="players">Player name(s) attending</label>
+        <input type="text" id="players" name="players" placeholder="e.g. Sidak Sethi, Olivia Shen" list="player-suggestions" autocomplete="off" />
+        <datalist id="player-suggestions"></datalist>
+        <div class="field-hint">
+          List every SCH player included in your tickets — they're the ones eligible for the
+          <strong style="color: var(--teal-light);">courtside shootaround viewing</strong>. Separate multiple names with commas.
+          Buying tickets with no player in your group? Just leave this blank.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tickets ── -->
+    <div class="card">
+      <div class="card-title">🎟️ Tickets</div>
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-name">Warriors vs Trail Blazers — Group Ticket</div>
+          <div class="ticket-desc">Seated together with the Shark City Hoops group. Fri 10/16 · Chase Center.</div>
+          <div class="ticket-price">$60 <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">/ ticket</span></div>
+        </div>
+        <div class="stepper" id="ticket-stepper">
+          <button type="button" class="step-btn minus" aria-label="Fewer tickets">−</button>
+          <span class="step-val" id="ticket-count">0</span>
+          <button type="button" class="step-btn plus" aria-label="More tickets">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Notes ── -->
+    <div class="card">
+      <div class="card-title">📝 Notes</div>
+      <div class="field" style="margin-bottom: 0;">
+        <label for="notes">Anything we should know?</label>
+        <textarea name="notes" id="notes" placeholder="e.g. Please seat us next to the Chiu family; wheelchair-accessible seat needed..."></textarea>
+      </div>
+    </div>
+
+    <!-- ── Payment ── -->
+    <div class="card">
+      <div class="card-title">💳 Payment</div>
+      <input type="hidden" name="payment" value="Zelle" />
+      <div style="background: var(--card2); border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: 8px; padding: 16px 18px;">
+        <div style="font-weight: 800; color: var(--text); font-size: 1rem; margin-bottom: 8px;">🏦 Zelle to <span style="color: var(--teal-light);">sharkcityhoops@gmail.com</span></div>
+        <div style="font-size: 0.85rem; color: var(--muted); line-height: 1.6;">
+          After submitting, send your total via Zelle. <strong style="color: var(--text);">Include "Warriors" + your name in the memo</strong>
+          so we can match your payment. Your tickets are locked in once payment is received —
+          <strong style="color: var(--text);">payment is due by Tuesday, September 1</strong> with the order.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Summary ── -->
+    <div class="summary-card">
+      <div class="card-title" style="color: var(--teal-light); padding-bottom: 14px;">🧾 Order Summary</div>
+      <div class="summary-rows" id="summary-rows">
+        <div class="summary-row" style="color:var(--muted);font-style:italic;">Add tickets to see your total.</div>
+      </div>
+      <div class="total-row">
+        <span class="total-label">Total</span>
+        <span class="total-amount" id="total-display">$0.00</span>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submit-btn">Reserve My Tickets 🦈</button>
+
+  </form>
+
+  <!-- ── Footer ── -->
+  <div style="max-width: 680px; margin: 24px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; line-height: 1.6;">
+    <div style="color: var(--text); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 8px;">Questions?</div>
+    <a href="mailto:info@sharkcityhoops.com" style="color: var(--teal-light); text-decoration: none; font-weight: 600;">info@sharkcityhoops.com</a>
+    <div style="margin-top: 14px; opacity: 0.7;">
+      Every ticket supports Shark City Hoops — proceeds from this fundraiser go directly to our program. 🦈💙
+    </div>
+    <div style="margin-top: 8px; opacity: 0.55; font-size: 0.7rem;">
+      © 2026 Shark City Hoops · Tickets are final once the group order is placed.
+    </div>
+  </div>
+
+  <!-- ── Confirmation Modal ── -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-check">🎟️</div>
+        <h2>Tickets Reserved!</h2>
+        <p>Thanks for supporting Shark City Hoops 🦈</p>
+      </div>
+      <div class="modal-body">
+        <div class="modal-order-line" id="modal-order-line"></div>
+        <div class="modal-total-row">
+          <span class="modal-total-label">Total Due</span>
+          <span class="modal-total-amount" id="modal-total"></span>
+        </div>
+        <div class="modal-payment-note" id="modal-payment-note"></div>
+      </div>
+      <button type="button" class="modal-close-btn" id="modal-close-btn">Done 🦈</button>
+    </div>
+  </div>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5dNvxtzuxfCU4qt8p1sjAfxbghXXCUQK1MwqIqVtZ1avQNxirdYbayFvnUkaFLQY_/exec';
+    const TICKET_PRICE = 60;
+    const TICKET_GOAL = 75;
+    const MAX_TICKETS_PER_ORDER = 20;
+    // ────────────────────────────────────────────────────────
+
+    // ── Roster datalist (suggestions only — free text allowed) ──
+    const ROSTER = [
+      'Ivan Lam','Curtis Huang','Kaden Tran','Evan Lam','Hanniel Rajan','Rory Nguyen','Ezequiel "Leo" Peña',
+      'Cadence Aquino','Chelsea Cheng','Ellycia Peralta','Vivianne Llavore','Stephanie Marcos','Valeta Saric',
+      'Jeilani Young','Yamileth Hernandez','Natalia Sanchez',
+      'Owen Chang','Ethan Lam','Manley Brown','Lionel Huang','Jacob Gordon','Mylo Dai','Benjamin Chen','Om Swaroop',
+      'Zayan Shreyom','Vincent Jr Ha','Logan Chiu','Michael Corpuz','Khoa Ngo','Rohit Saggi','Sean Mooney',
+      'Luca Cortese','Kai Yen','Jonah Hanley','Adniel Rajan','Jayce Legaspi','Eli Abad',
+      'Sophia Ranaweera','Macayla Sin','Oliwia Szkorla',
+      'Kameron Conyers','Arthur Sanez','Anik Prakash','Joshua Flores','Sidak Sethi','Brayden Tique','Kenji Nomura',
+      'Chris Cheng','Ekamjot Dhami','Ronan Lyew','Jeramy Dai','Alel Santos',
+      'Jarren Fadrilan','Ryan Chiu','Diego Sanchez','Marco Smith','Johnny Ngo','Andrew Sayson','Devin Chiu',
+      'Vegas Ventura','Madison Garcia','Sukhreet Dhami','Olivia Shen','Audrey Romero','Aria Alvendia','Doris Chen',
+      'Deetya Chakilam','Addison Balagot','Callie Ramones','Verena Saric'
+    ];
+    const datalist = document.getElementById('player-suggestions');
+    ROSTER.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      datalist.appendChild(opt);
+    });
+
+    // ── Ticket stepper ──
+    let ticketQty = 0;
+    const stepperEl = document.getElementById('ticket-stepper');
+    const countEl = document.getElementById('ticket-count');
+    const totalDisplay = document.getElementById('total-display');
+    const summaryRows = document.getElementById('summary-rows');
+
+    function updateSummary() {
+      const total = ticketQty * TICKET_PRICE;
+      totalDisplay.textContent = '$' + total.toFixed(2);
+      stepperEl.classList.toggle('active', ticketQty > 0);
+      if (ticketQty === 0) {
+        summaryRows.innerHTML = '<div class="summary-row" style="color:var(--muted);font-style:italic;">Add tickets to see your total.</div>';
+      } else {
+        summaryRows.innerHTML = `
+          <div class="summary-row">
+            <span>Warriors vs Trail Blazers · Fri 10/16</span>
+            <span class="qty">${ticketQty} × $${TICKET_PRICE} = <strong style="color:var(--text)">$${total.toFixed(2)}</strong></span>
+          </div>`;
+      }
+    }
+
+    stepperEl.querySelector('.plus').addEventListener('click', () => {
+      if (ticketQty < MAX_TICKETS_PER_ORDER) {
+        ticketQty += 1;
+        countEl.textContent = ticketQty;
+        updateSummary();
+      }
+    });
+    stepperEl.querySelector('.minus').addEventListener('click', () => {
+      if (ticketQty > 0) {
+        ticketQty -= 1;
+        countEl.textContent = ticketQty;
+        updateSummary();
+      }
+    });
+
+    // ── Progress toward 75 ──
+    async function loadProgress() {
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') return;
+      try {
+        const res = await fetch(APPS_SCRIPT_URL + '?count=1', { cache: 'no-cache' });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.ok || typeof data.tickets !== 'number') return;
+        const pct = Math.min(100, Math.round((data.tickets / TICKET_GOAL) * 100));
+        document.getElementById('progress-count').textContent = data.tickets + ' / ' + TICKET_GOAL;
+        document.getElementById('progress-fill').style.width = pct + '%';
+        document.getElementById('progress-card').classList.add('visible');
+      } catch (e) { /* backend unreachable — leave progress hidden */ }
+    }
+    loadProgress();
+
+    // ── Submit ──
+    const form = document.getElementById('ticket-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusMsg = document.getElementById('status-msg');
+
+    function showStatus(msg) {
+      statusMsg.textContent = msg;
+      statusMsg.className = 'error';
+      statusMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function buildPayload() {
+      const data = {};
+      const fd = new FormData(form);
+      fd.forEach((val, key) => { data[key] = val; });
+      data.tickets = ticketQty;
+      data.ticketPrice = TICKET_PRICE;
+      data.orderTotal = (ticketQty * TICKET_PRICE).toFixed(2);
+      data.timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+      return data;
+    }
+
+    function validateForm(data) {
+      if (!data.buyerName?.trim()) return 'Please enter your name.';
+      if (!data.email?.trim() || !data.email.includes('@')) return 'Please enter a valid email address.';
+      if (!data.phone?.trim()) return 'Please enter a phone number.';
+      if (!data.connection) return 'Please select your connection to Shark City Hoops.';
+      if (ticketQty < 1) return 'Please add at least 1 ticket.';
+      if ((data.connection === 'SCH Parent / Guardian' || data.connection === 'SCH Player Family Member')
+          && !data.players?.trim()) {
+        return "Please list your SCH player's name so they get the shootaround perk.";
+      }
+      return null;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      statusMsg.style.display = 'none';
+      statusMsg.className = '';
+      const data = buildPayload();
+      const err = validateForm(data);
+      if (err) { showStatus('⚠️ ' + err); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      const total = '$' + Number(data.orderTotal).toFixed(2);
+      document.getElementById('modal-order-line').innerHTML =
+        `<span>Warriors vs Trail Blazers · Fri 10/16 × ${data.tickets}</span><span class="line-price">${total}</span>`;
+      document.getElementById('modal-total').textContent = total;
+      document.getElementById('modal-payment-note').innerHTML =
+        `<strong>💳 Send ${total} via Zelle to sharkcityhoops@gmail.com</strong><br>` +
+        `Include <strong>"Warriors — ${escapeHtml(data.buyerName)}"</strong> in the memo. ` +
+        `Payment is due by <strong>Tuesday, Sept 1</strong> to lock in your tickets. ` +
+        `A confirmation copy has been emailed to <strong>${escapeHtml(data.email)}</strong>.`;
+      document.getElementById('confirm-modal').classList.add('open');
+
+      // Reset for the next order
+      form.reset();
+      ticketQty = 0;
+      countEl.textContent = '0';
+      updateSummary();
+      submitBtn.textContent = 'Tickets Reserved ✓';
+
+      // Backend — no-cors requires we NOT set application/json content-type.
+      // Apps Script's e.postData.contents reads the raw body regardless.
+      if (APPS_SCRIPT_URL && APPS_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify(data),
+        }).catch(err => console.warn('Ticket backend fetch failed:', err));
+      }
+    });
+
+    document.getElementById('modal-close-btn').addEventListener('click', () => {
+      document.getElementById('confirm-modal').classList.remove('open');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Reserve My Tickets 🦈';
+      loadProgress(); // refresh the count after an order
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function escapeHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+  </script>
+</body>
+</html>

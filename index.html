@@ -528,8 +528,8 @@
 
     <!-- ── Player Association ── -->
     <div class="card">
-      <div class="card-title">🦈 SCH Player(s) in Your Group</div>
-      <div class="field" style="margin-bottom: 0;">
+      <div class="card-title">🦈 SCH Players</div>
+      <div class="field">
         <label for="players">Player name(s) attending</label>
         <input type="text" id="players" name="players" placeholder="e.g. Sidak Sethi, Olivia Shen" list="player-suggestions" autocomplete="off" />
         <datalist id="player-suggestions"></datalist>
@@ -537,6 +537,19 @@
           List every SCH player included in your tickets — they're the ones eligible for the
           <strong style="color: var(--teal-light);">courtside shootaround viewing</strong>. Separate multiple names with commas.
           Buying tickets with no player in your group? Just leave this blank.
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom: 0;">
+        <label for="credit-player">Which SCH player gets credit for this sale? *</label>
+        <select id="credit-player" name="creditPlayer" required>
+          <option value="">— Select a player —</option>
+        </select>
+        <div class="field-hint">
+          🏆 <strong style="color: var(--teal-light);">Fan Tunnel Contest:</strong> the
+          <strong style="color: var(--teal-light);">top 20 SCH players</strong> by tickets sold get to line the
+          <strong style="color: var(--teal-light);">fan tunnel and high-five the Warriors</strong> as they run onto the court.
+          Pick the player who invited you so they get the credit.
         </div>
       </div>
     </div>
@@ -650,7 +663,9 @@
       'Chris Cheng','Ekamjot Dhami','Ronan Lyew','Jeramy Dai','Alel Santos',
       'Jarren Fadrilan','Ryan Chiu','Diego Sanchez','Marco Smith','Johnny Ngo','Andrew Sayson','Devin Chiu',
       'Vegas Ventura','Madison Garcia','Sukhreet Dhami','Olivia Shen','Audrey Romero','Aria Alvendia','Doris Chen',
-      'Deetya Chakilam','Addison Balagot','Callie Ramones','Verena Saric'
+      'Deetya Chakilam','Addison Balagot','Callie Ramones','Verena Saric',
+      // Fall 2026 additions — seen in Warriors Night orders 9/1
+      'Sahil Thind','Blakely Thai','Dominic Asuncion','Nehamiah Dumas','Evan Baltazar'
     ];
     const datalist = document.getElementById('player-suggestions');
     ROSTER.forEach(name => {
@@ -658,6 +673,19 @@
       opt.value = name;
       datalist.appendChild(opt);
     });
+
+    // Sales-credit dropdown — exact roster values so the leaderboard tallies cleanly
+    const creditSel = document.getElementById('credit-player');
+    [...ROSTER].sort((a, b) => a.localeCompare(b)).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      creditSel.appendChild(opt);
+    });
+    const noCredit = document.createElement('option');
+    noCredit.value = 'No specific player';
+    noCredit.textContent = 'No specific player / general SCH support';
+    creditSel.appendChild(noCredit);
 
     // ── Ticket stepper ──
     let ticketQty = 0;
@@ -739,6 +767,7 @@
       if (!data.email?.trim() || !data.email.includes('@')) return 'Please enter a valid email address.';
       if (!data.phone?.trim()) return 'Please enter a phone number.';
       if (!data.connection) return 'Please select your connection to Shark City Hoops.';
+      if (!data.creditPlayer) return 'Please pick which SCH player gets credit for this sale.';
       if (ticketQty < 1) return 'Please add at least 1 ticket.';
       if ((data.connection === 'SCH Parent / Guardian' || data.connection === 'SCH Player Family Member')
           && !data.players?.trim()) {

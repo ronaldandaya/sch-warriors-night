@@ -541,7 +541,7 @@
       </div>
 
       <div class="field" style="margin-bottom: 0;">
-        <label for="credit-player">Which SCH player gets credit for this sale? *</label>
+        <label for="credit-player" style="color: var(--teal-light);">★ Required — which SCH player gets credit for this sale?</label>
         <select id="credit-player" name="creditPlayer" required>
           <option value="">— Select a player —</option>
         </select>
@@ -748,6 +748,9 @@
     function showStatus(msg) {
       statusMsg.textContent = msg;
       statusMsg.className = 'error';
+      // must clear the inline display:none set at submit start — an inline style
+      // beats the .error{display:block} rule and silently hides the message
+      statusMsg.style.display = 'block';
       statusMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 

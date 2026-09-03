@@ -7,7 +7,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://warriors.sharkcityhoops.com/leaderboard.html" />
   <meta property="og:title" content="Fan Tunnel Leaderboard — SCH Warriors Night" />
-  <meta property="og:description" content="Top 20 Shark City Hoops sellers line the fan tunnel and high-five the players as they run onto the court. See where your player ranks!" />
+  <meta property="og:description" content="150 tickets unlocks the fan tunnel for the top 20 Shark City Hoops sellers. See where your player ranks." />
   <meta property="og:image" content="https://warriors.sharkcityhoops.com/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <style>
@@ -169,7 +169,7 @@
 
   <div class="tunnel-banner">
     <div class="eyebrow">🏀 What they're playing for</div>
-    <div class="headline">The top <span class="gold">20 SCH players</span> line the <span class="gold">fan tunnel</span> and high-five the players as they run onto the court.</div>
+    <div class="headline">If we sell <span class="gold">150 tickets</span> as a program, the top <span class="gold">20 SCH players</span> line the <span class="gold">fan tunnel</span> and high-five the players as they run onto the court.</div>
     <div class="body">Every ticket your player sells counts toward their spot. Friday, Oct 16 · Chase Center.<br><span style="opacity:0.72;font-size:0.82rem">Which team lines up for the tunnel is confirmed closer to game day.</span></div>
   </div>
 
@@ -179,7 +179,7 @@
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="lbl">Tickets Sold</div><div class="val teal" id="stat-tickets">—</div></div>
+    <div class="stat"><div class="lbl">Tickets / Goal</div><div class="val teal" id="stat-tickets">—</div></div>
     <div class="stat"><div class="lbl">Players Selling</div><div class="val" id="stat-players">—</div></div>
     <div class="stat"><div class="lbl">Raised for SCH</div><div class="val gold" id="stat-raised">—</div></div>
   </div>
@@ -224,22 +224,29 @@
     }
 
     const totalTickets = leaders.reduce((s, l) => s + l.tickets, 0);
-    $('stat-tickets').textContent = totalTickets;
+    const goal = data.goal || 150;
+    $('stat-tickets').textContent = totalTickets + ' / ' + goal;
     $('stat-players').textContent = leaders.length;
     $('stat-raised').textContent = '$' + (totalTickets * MARGIN_PER_TICKET).toLocaleString();
 
-    // Open-spot motivator
-    const open = spots - leaders.length;
-    if (open > 0) {
-      $('spots-big').textContent = `🔥 ${open} tunnel spot${open === 1 ? '' : 's'} still open!`;
-      $('spots-small').textContent = `Only ${leaders.length} player${leaders.length === 1 ? ' has' : 's have'} sales so far — right now ANY player who sells even one ticket makes the top ${spots}.`;
-      $('spots-alert').classList.add('visible');
+    // The 150-ticket program total is the GATE. Lead with it until it's cleared;
+    // only then does the top-20 seat race become the headline.
+    const need = goal - totalTickets;
+    if (need > 0) {
+      $('spots-big').textContent = `${need} more ticket${need === 1 ? '' : 's'} to unlock the fan tunnel`;
+      $('spots-small').textContent = `The tunnel needs ${goal} tickets sold by the program as a whole. We're at ${totalTickets}. If we don't reach ${goal}, nobody lines the tunnel — so every ticket from every family counts.`;
     } else {
-      const cutoff = leaders[spots - 1].tickets;
-      $('spots-big').textContent = `🔥 ${cutoff} ticket${cutoff === 1 ? '' : 's'} to crack the top ${spots}`;
-      $('spots-small').textContent = `The tunnel cut-off is currently ${cutoff} ticket${cutoff === 1 ? '' : 's'}. Sell more to move up!`;
-      $('spots-alert').classList.add('visible');
+      const open = spots - leaders.length;
+      if (open > 0) {
+        $('spots-big').textContent = `Fan tunnel UNLOCKED — ${open} spot${open === 1 ? '' : 's'} still open`;
+        $('spots-small').textContent = `We passed ${goal} tickets. Only ${leaders.length} player${leaders.length === 1 ? ' has' : 's have'} sales, so any player who sells even one ticket makes the top ${spots}.`;
+      } else {
+        const cutoff = leaders[spots - 1].tickets;
+        $('spots-big').textContent = `Fan tunnel UNLOCKED — ${cutoff} ticket${cutoff === 1 ? '' : 's'} to crack the top ${spots}`;
+        $('spots-small').textContent = `We passed ${goal} tickets. The tunnel cut-off is currently ${cutoff} ticket${cutoff === 1 ? '' : 's'}.`;
+      }
     }
+    $('spots-alert').classList.add('visible');
 
     const max = leaders[0].tickets || 1;
     let html = '';
